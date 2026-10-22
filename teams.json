@@ -1,0 +1,30 @@
+{
+  "templates": {
+    "dev-squad": {
+      "name": "开发小队",
+      "description": "设计 → 实现 → 评审的三角小队",
+      "members": [
+        { "name": "architect", "role": "architect", "description": "负责设计与评审裁决" },
+        { "name": "implementer", "role": "implementer", "description": "负责实现" },
+        { "name": "reviewer", "role": "reviewer", "description": "独立评审实现" }
+      ],
+      "tasks": [
+        { "subject": "设计接口与拆分", "owner": "architect" },
+        { "subject": "实现", "owner": "implementer", "blocked_by": [1] },
+        { "subject": "评审并给出结论", "owner": "reviewer", "blocked_by": [2] }
+      ]
+    },
+    "review-squad": {
+      "name": "审查小队",
+      "description": "强模型审查 + 快模型取证",
+      "members": [
+        { "name": "reviewer", "role": "reviewer", "description": "对抗式评审" },
+        { "name": "scout", "role": "implementer", "description": "收集证据与复现步骤" }
+      ],
+      "tasks": [
+        { "subject": "定位问题与复现", "owner": "scout" },
+        { "subject": "给出评审结论", "owner": "reviewer", "blocked_by": [1] }
+      ]
+    }
+  }
+}

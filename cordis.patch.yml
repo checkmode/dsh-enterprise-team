@@ -1,0 +1,14 @@
+# Enterprise Team bundle patch.
+#
+# Registers the Team runtime (tools, projection, policy) and its browser surface
+# (conversation-header shortcut plus the right-pane Team tab). Catalogs are
+# resolved from this package, so no absolute paths are needed.
+- insert:
+    - id: enterprise-team
+      name: 'dsh-enterprise-team'
+      config:
+        freshProvider: spawn
+        forkProvider: fork
+        maxMembers: 8
+        maxTeams: 10
+        maxTasks: 256

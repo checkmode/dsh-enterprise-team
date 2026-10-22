@@ -1,0 +1,35 @@
+{
+  "name": "dsh-enterprise-team",
+  "version": "0.1.0",
+  "description": "Self-contained Agent Team runtime and roster panel for DeepSeek Harness: explicit Teams, per-role model routes, drafts with review, task board with submit/review/acceptance, and token usage.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "roles.json",
+    "teams.json",
+    "cordis.patch.yml"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-primitives"
+      ]
+    }
+  },
+  "license": "MIT"
+}

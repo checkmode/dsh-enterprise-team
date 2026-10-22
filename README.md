@@ -72,6 +72,31 @@ Both are re-read on demand, so editing them applies without a reload.
 `list_members`, `send_member_message`, `interrupt_member`, `wait_members`,
 `team_status`, `task_create`, `task_list`, `task_get`, `task_update`.
 
+## Local development
+
+The bundle halves are picked up from disk, so a quick loop is: edit, restart the
+host, refresh the page.
+
+```bash
+# point the profiles and the dsh source checkout at this working tree
+./scripts/dev-link.sh
+
+# restart the source Web host and print its URL
+./scripts/dev-web.sh
+```
+
+`dev-link.sh` replaces each `node_modules/dsh-enterprise-team` with a symlink to
+this directory, so both the Host half and the browser bundle come from the
+working tree. `dev-web.sh` restarts the source `dsh web` process (the Host and
+the client bundle are both captured at launch) and reports an entry that failed
+to activate.
+
+For the desktop app: run `dev-link.sh`, then either restart the app or reload the
+bundle from the Plugins page.
+
+Catalogs need no restart at all — `roles.json` and `teams.json` are re-read per
+call.
+
 ## Layout
 
 ```
@@ -81,6 +106,7 @@ lib/store.js     Teams, index, and drafts on disk
 roles.json       role catalog
 teams.json       team templates
 cordis.patch.yml bundle row
+scripts/         dev-link.sh, dev-web.sh
 ```
 
 ## License

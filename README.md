@@ -74,28 +74,25 @@ Both are re-read on demand, so editing them applies without a reload.
 
 ## Local development
 
-The bundle halves are picked up from disk, so a quick loop is: edit, restart the
-host, refresh the page.
+Full auto-reload: save a file and the running instance picks it up.
 
 ```bash
-# point the profiles and the dsh source checkout at this working tree
-./scripts/dev-link.sh
-
-# restart the source Web host and print its URL
-./scripts/dev-web.sh
+./scripts/dev-link.sh          # profiles + dsh source checkout point at this tree
+./scripts/dev-enable-hmr.sh    # add this tree to the profile hmr roots
+./scripts/dev-web.sh           # start/restart the source Web host once
 ```
 
-`dev-link.sh` replaces each `node_modules/dsh-enterprise-team` with a symlink to
-this directory, so both the Host half and the browser bundle come from the
-working tree. `dev-web.sh` restarts the source `dsh web` process (the Host and
-the client bundle are both captured at launch) and reports an entry that failed
-to activate.
+After the one-time setup:
 
-For the desktop app: run `dev-link.sh`, then either restart the app or reload the
-bundle from the Plugins page.
+- `lib/index.js` (host half) — reloaded by `dsh-hmr` within about a second; tools
+  and the projection are re-registered in place.
+- `lib/client.js` (browser half) — `client-hmr` polls the bundle artifact and swaps
+  the plugin in open pages; no page refresh, only that plugin's React state resets.
+- `roles.json` / `teams.json` — re-read on demand, so no reload at all.
 
-Catalogs need no restart at all — `roles.json` and `teams.json` are re-read per
-call.
+`dev-web.sh` is only for starting the host the first time (or after a Host-side
+change under `apps/` in the dsh checkout). `dev-enable-hmr.sh` accepts profile
+names, defaulting to `web desktop`.
 
 ## Layout
 
@@ -106,7 +103,7 @@ lib/store.js     Teams, index, and drafts on disk
 roles.json       role catalog
 teams.json       team templates
 cordis.patch.yml bundle row
-scripts/         dev-link.sh, dev-web.sh
+scripts/         dev-link.sh, dev-enable-hmr.sh, dev-web.sh
 ```
 
 ## License
